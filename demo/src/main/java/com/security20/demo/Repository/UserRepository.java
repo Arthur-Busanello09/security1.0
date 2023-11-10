@@ -1,5 +1,4 @@
 package com.security20.demo.Repository;
-
 import com.security20.demo.Entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -19,18 +19,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
+    private final UserService userService;
     @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private UserService userService;
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csfr-> csfr.disable())
+                .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/livre").permitAll()
+                        .requestMatchers("/api/users").permitAll()
                         .anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults());
 
@@ -38,24 +38,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    static PasswordEncoder psEncode() {
+    static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//    protected void authManager(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService);
-//    }
-    @Bean
-    UserDetailsService userDetailsService() {
-        UserDetails arthur = User.builder()
-                .username("arthur")
-                .password(psEncode().encode("123"))
-                .roles("USER")
-                .build();
 
-        return new InMemoryUserDetailsManager(arthur);
-    }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(psEncode());
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
+
 }
