@@ -1,5 +1,6 @@
 package com.security20.demo.Service;
 
+import com.security20.demo.Entity.Usuario;
 import com.security20.demo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -20,24 +21,24 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public List<com.security20.demo.Entity.User> getAllUsers() {
-        List<com.security20.demo.Entity.User> usersIterable = userRepository.findAll();
-        List<User> usersList = new ArrayList<>();
-        usersIterable.forEach(usersList::add);
-        return usersList;
+    public List<Usuario> getAllUsers() {
+        List<Usuario> usersIterable = userRepository.findAll();
+        List<Usuario> UsuarioList = new ArrayList<>();
+        usersIterable.forEach(UsuarioList::add);
+        return UsuarioList;
     }
 
-    public com.security20.demo.Entity.User getUserById(Long id) {
+    public Usuario getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User createUser(User user) {
+    public Usuario createUser(Usuario user) {
         return userRepository.save(user);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.security20.demo.Entity.User user = userRepository.findByUsername(username);
+        Usuario user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);

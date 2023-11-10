@@ -2,18 +2,15 @@ package com.security20.demo.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-@Table(name="users")
+
 @Entity
-public class User implements UserDetails {
+public class Usuario implements UserDetails {
     @Id
     @Getter
 

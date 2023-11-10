@@ -41,9 +41,9 @@ public class SecurityConfig {
     static PasswordEncoder psEncode() {
         return new BCryptPasswordEncoder();
     }
-    protected void authManager(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
-    }
+//    protected void authManager(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userService);
+//    }
     @Bean
     UserDetailsService userDetailsService() {
         UserDetails arthur = User.builder()
@@ -53,5 +53,9 @@ public class SecurityConfig {
                 .build();
 
         return new InMemoryUserDetailsManager(arthur);
+    }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(psEncode());
     }
 }

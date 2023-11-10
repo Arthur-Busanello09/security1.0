@@ -1,6 +1,6 @@
 package com.security20.demo.Controller;
 
-import com.security20.demo.Entity.User;
+import com.security20.demo.Entity.Usuario;
 import com.security20.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,17 +21,17 @@ public class TesteController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<Usuario> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
+    public Usuario getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public Usuario createUser(@RequestBody Usuario user) {
         String encodedPassword = passwordEncoder().encode(user.getPassword());
         user.setPassword(encodedPassword);
 
